@@ -8,6 +8,7 @@
 #include "fractions.h"
 using namespace std;
 
+
 int main (void)
 {   
     //    ****************      D E C L A R A T I O N S      ***************
@@ -15,15 +16,15 @@ int main (void)
     Fraction frac1;
     Fraction frac2;
     //    ****************      T R A I T E M E N T S       ****************   
-    frac1 = inititalisation(3,4);
+    //frac1 = inititalisation(3,4);
     //modifNumerateur(frac1, 4);
     //modifDenominateur(frac1, 7);
-    afficheArrondie(frac1);
-    afficheArrondie(frac2);
 
     frac2 = saisieFrac();
-    conversionIrreductible(frac2);
+
+    afficheValExacte(frac2);
     afficheArrondie(frac2);
+    
 
     //if (fracEgales(frac1, frac2))  {cout << "Les 2 fractions sont egales" << endl;}
     //else                           {cout << "Les 2 fractions ne sont pas egales" << endl;}
@@ -36,9 +37,9 @@ int main (void)
     
     //afficheValExacte(saisieOper(frac1, frac2));
 
-    afficheValExacte(saisieOper(frac1, frac2));
+    //afficheValExacte(saisieOper(frac1, frac2));
     
-    
+
 
     return 911;
 }

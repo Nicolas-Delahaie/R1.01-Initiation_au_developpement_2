@@ -1,3 +1,11 @@
+/**
+ * @file fractions.cpp
+ * @author N. DELAHAIE
+ * @brief Module servant à manipuler des fractions
+ * @date 2021-11-18
+ * 
+ */
+
 #include "fractions.h"
 #include <iostream>
 #include <math.h>
@@ -32,8 +40,6 @@ Fraction saisieFrac()
 
 Fraction saisieOper(Fraction frac1, Fraction frac2)
 {
-    int numerateur;
-    int denopminateur;
     char operateur;
     Fraction resultat;
 
@@ -80,7 +86,6 @@ void conversionIrreductible (Fraction &frac)
 
 void denomCommun(Fraction &frac1, Fraction &frac2)
 {
-    Fraction fraction;
     unsigned int ppcmDenom;
 
     if (frac1.denom != frac2.denom)
@@ -97,11 +102,22 @@ void denomCommun(Fraction &frac1, Fraction &frac2)
 
 
 // -- OBSERVATEURS --
+bool estReduite (Fraction frac)
+{
+    if (pgcd(frac.num, frac.denom) == 1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 bool denomNegalAZero(Fraction frac)
 {
     if (frac.denom == 0)    {return false;}
     else                    {return true;}
-
 }
 
 bool fracEgales(Fraction frac1, Fraction frac2)
@@ -134,6 +150,7 @@ Fraction addition(Fraction frac1, Fraction frac2)
     else
     {
         cout << "Division par 0 impossible" << endl;
+        return FRACTION_NULLE;
     }
 }
 
@@ -152,6 +169,7 @@ Fraction soustraction(Fraction frac1, Fraction frac2)
     else
     {
         cout << "Division par 0 impossible" << endl;
+        return FRACTION_NULLE;
     }
 }
 
@@ -169,6 +187,7 @@ Fraction multiplication(Fraction frac1, Fraction frac2)
     else
     {
         cout << "Division par 0 impossible" << endl;
+        return FRACTION_NULLE;
     }
 }
 
@@ -192,6 +211,7 @@ Fraction division(Fraction frac1, Fraction frac2)
     else
     {
         cout << "Division par 0 impossible" << endl;
+        return FRACTION_NULLE;
     }
 }
 
@@ -206,12 +226,11 @@ void afficheValExacte(Fraction frac)
 
 void afficheArrondie(Fraction frac)
 {
-    float fracArrondie;
-    //double valDecimale;
+    double fracArrondie;
 
     if (denomNegalAZero(frac))
     {
-        fracArrondie = int((double(frac.num) / double(frac.denom)) * 100) /100.0;
+        fracArrondie = int((double(frac.num) / double(frac.denom)) * 100.0) /100.0;
         cout << fracArrondie << endl;
     }
     else
@@ -245,4 +264,3 @@ int ppcm(unsigned int x, unsigned int y)
   }
   return A;
 }
-

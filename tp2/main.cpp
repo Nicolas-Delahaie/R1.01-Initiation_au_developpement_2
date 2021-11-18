@@ -16,14 +16,19 @@ int main (void)
     Fraction frac1;
     Fraction frac2;
     //    ****************      T R A I T E M E N T S       ****************   
-    //frac1 = inititalisation(3,4);
+    frac1 = inititalisation(3,4);
     //modifNumerateur(frac1, 4);
     //modifDenominateur(frac1, 7);
 
-    frac2 = saisieFrac();
+    //frac2 = saisieFrac();
 
-    afficheValExacte(frac2);
-    afficheArrondie(frac2);
+    //afficheValExacte(frac1);
+    //afficheValExacte(frac2);
+
+    afficheValExacte(saisieFracEtOper());
+
+    //afficheValExacte(division(frac1, frac2));
+    //afficheArrondie(division(frac1, frac2));
     
 
     //if (fracEgales(frac1, frac2))  {cout << "Les 2 fractions sont egales" << endl;}

@@ -6,6 +6,7 @@
  * 
  */
 
+
 #include "fractions.h"
 #include <iostream>
 #include <math.h>

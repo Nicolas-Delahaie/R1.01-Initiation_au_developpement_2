@@ -6,18 +6,10 @@
  Remarques : Code conforme aux spécification précisées dans le sujet R1.01-partie2 - TD n°4
 */
 #include <iostream>
+#include <stdlib.h>
 #include "pile.h"
 using namespace std;
 
-/*
-     1    |     2     |     3
-----------|-----------|-----------
-          |           |
-          |           |
- -------  |     -     |
---------- |    ---    |   -----
-mmmmmmmmmm|mmmmmmmmmmm|mmmmmmmmmmm
-*/
 
 const unsigned int NB_TOURS = 3;     // CONSTANTE dite 'GLOBALE' : 
                                             // portée = tous les Sous-programmes
@@ -67,8 +59,6 @@ void afficherTour(UnePile tour);
 void afficherTours(const UnePile lesTours[]);
 // Affiche le contenu des tours passées en paramètre 
 
-void afficherToursJoli(const UnePile lesTours[], const unsigned short int &nombreDisques);
-// Affiche le contenu des tours passées en paramètre
 
 
 /* ---------- Algorithmes de résolution du problème des tours de Hanoi
@@ -192,6 +182,7 @@ bool estDeplacable(const UnePile tourOrigine, const UnePile tourDestination)
         }
     }
 }
+
 // ---------- Primitives modifiant 1 tour
 void deplacerDisque(UnePile &tourOrigine, UnePile &tourDestination)
 {
@@ -244,122 +235,6 @@ void afficherTours(const UnePile lesTours[])
     cout << endl;
 }
 
-void afficherToursJoli(const UnePile lesTours[], const unsigned short int &nombreDisques)
-{
-    unsigned short int espaceMilieu;        //Nombre de characteres séparant une bordure du centre
-    unsigned short int espaceBordure;       //Espace séparant la bordure (|) d'un disque (-)
-    unsigned short int largeur;             //Nombre de characteres séparant les 2 bordures (|)
-    unsigned short int tailleDisque;        //Nombre de tirets représentant un disque
-    
-    UnePile copieTours[3];                  //Copie de lesTours qui est modifiable
-    UnElement nombreDepile;                 //Disque (nombre) depilé d'une tour
-    unsigned int hauteursPiles[3];
-
-
-
-    largeur = 1 + 2 * nombreDisques;
-    for (unsigned int i = 0; i < 3; i++)
-    {
-        copieTours[i] = lesTours[i];
-    }
-    
-    espaceMilieu = largeur/2;
-
-    // -- Affichage entête de grille --
-    //Premiere ligne
-    cout << "|";
-    for (unsigned short int i = 0; i < 6 ; i++)
-    {
-        for (unsigned short int n = 0; n < espaceMilieu; n++)
-        {
-            cout << " ";
-        }
-        if (i%2 == 0)
-        {
-            cout << 1 + i/2;
-        }
-        else
-        {
-            cout << "|";
-        }
-    }
-    
-    cout << endl;
-
-    //Deuxieme ligne
-    cout << "|";
-    for (unsigned short int i = 0; i < 3; i++)
-    {
-        for (unsigned n = 0; n < largeur; n++)
-        {
-            cout << "-";
-        }
-        cout << "|";
-    }
-    cout << endl;
-
-
-    //Autres lignes
-    for (unsigned short int etage = nombreDisques ; etage > 0 ; etage--)
-    {
-        cout << "|";
-        for (unsigned short int colonne = 0; colonne < 3; colonne++)
-        {
-            if(taille(copieTours [colonne]) == etage)
-            {
-                //Depilement
-                depiler(copieTours[colonne],nombreDepile);
-
-                //Calculs taille et espacements
-                tailleDisque = nombreDepile*2 -1;
-                espaceBordure = (largeur - tailleDisque)/2;
-
-                //Affichage disques
-                for (unsigned int i = 0; i < espaceBordure; i++)
-                {
-                    cout << " ";
-                }
-                for (unsigned int i = 0; i < tailleDisque; i++)
-                {
-                    cout << "_";
-                }
-                for (unsigned int i = 0; i < espaceBordure; i++)
-                {
-                    cout << " ";
-                }
-                
-                cout << "|";
-            }
-            else
-            {
-                //Affiche ligne vide
-                for (unsigned int i = 0; i < largeur; i++)
-                {
-                    cout << " ";
-                }
-                cout << "|";
-            }
-        }
-        cout << endl;
-    }
-    
-
-
-
-    //Dernière ligne
-    cout << "|";
-    for (unsigned short int i = 0; i < 3; i++)
-    {
-        for (unsigned n = 0; n < largeur; n++)
-        {
-            cout << "m";
-        }
-        cout << "|";
-    }
-    
-}
-
-
 // ---------- Algorithme de résolution du problème des tours de Hanoi
 void resoudreToursHanoiManuel(unsigned int nbDisques)
 {
@@ -370,24 +245,24 @@ void resoudreToursHanoiManuel(unsigned int nbDisques)
     bool deplacementDemande;        // = vrai si, mors de la saisie, un déplacement est demandé, 
                                     // = faux si pas de déplacement demandé
 
-     // Initialiser tours et éléments de la réussite
+    //Initialiser tours et éléments de la réussite
     initialiserTours(lesTours);
     remplirTour(lesTours[0], nbDisques);
-    afficherToursJoli(lesTours, nbDisques); cout << endl;
+    afficherTours(lesTours); cout << endl;
        
     // faire des déplacements manuels jusqu'à gagner
     do
     {
         // saisie - verif
         saisieVerifDeplacementDemande(deplacementDemande, tourOrigine, tourDestination);
-
         if (deplacementDemande)
         {
             if (estDeplacable(lesTours[tourOrigine], lesTours[tourDestination]))
             {
+                system ("CLS");
                 // faire le déplacement demandé
                 deplacerDisque (lesTours[tourOrigine], lesTours[tourDestination]);
-                afficherToursJoli(lesTours, nbDisques);
+                afficherTours(lesTours);
             }
             else
             {
@@ -408,7 +283,7 @@ void resoudreToursHanoiManuel(unsigned int nbDisques)
         
         
         deplacement = false;   // = faux si l'utilisateur saisit "0" (pas de déplacement), vrai s'il saisit une des autres combinaisons autorisées
-        cout << endl << " tourOrigine-tourDestination (exple : 12), 0 si pas de deplacement " ;
+        cout << endl << "Instruction (12 pour deplacer le disque de la tour 1 a 2) : " ;
 
         do
         {
